@@ -1,6 +1,9 @@
 /*
-Package echo provides the StatementAssist interface which provides cleaner sql CRUD operations along with query & error logging
+
+Package sqlAssist provides the StatementAssist interface which provides cleaner sql CRUD operations along with query & error logging
+
 Example:
+
 package main
 
 import (
@@ -59,11 +62,11 @@ func main() {
 	}
 	log.Fatalln(book)
 }
+
 See https://pkg.go.dev/database/sql for documentation on the standard sql library
 */
 
 package sqlAssist
-// sqlAssist Note
 
 import (
 	"database/sql"
@@ -93,11 +96,14 @@ func New(db *sql.DB) *AssistConfig {
 
 // UpdateSingleRow executes any CRUD operation EXCEPT Read for a single record
 /*
+
 Example:
+
 err := statementAssist.UpdateSingleRow(statement, args)
 if err != nil {
 	return nil, err
 }
+
 */
 func (ac AssistConfig) UpdateSingleRow(statement string, params ...interface{}) error {
 	log.Printf("Query: %s", statement)
@@ -118,7 +124,9 @@ func (ac AssistConfig) UpdateSingleRow(statement string, params ...interface{}) 
 // ScanSingleRow Executes Read operation on a single record & scans a single record into a struct.
 // Expects ONLY a single record to be returned
 /*
+
 Example:
+
 yourStruct := &YourStruct{}
 row, err := statementAssist.UpdateSingleRow(statement, args)
 if err != nil {
@@ -129,7 +137,9 @@ err = row.Scan(&yourStruct)
 if err != nil {
 	return nil, err
 }
+
 */
+
 func (ac AssistConfig) ScanSingleRow(statement string, params ...interface{}) (*sql.Row, error) {
 	if len(params) < 1 {
 		noParamsErr := errors.New("no params were passed")
@@ -148,7 +158,9 @@ func (ac AssistConfig) ScanSingleRow(statement string, params ...interface{}) (*
 // ScanMultipleRows Executes Read operation on multiple records & scans them into a slice of a struct
 // NOTE: ScanMultipleRows can work with a single record BUT please use ScanSingleRow if you are only expecting a single record to be found
 /*
+
 Example:
+
 var yourStructSlice []*YourStruct
 rows, err := statementAssist.UpdateSingleRow(statement, args)
 if err != nil {
@@ -163,7 +175,9 @@ for rows.Next() {
 	}
 	yourStructSlice = append(yourStructSlice, yourStruct)
 }
+
 */
+
 func (ac AssistConfig) ScanMultipleRows(statement string, params ...interface{}) (*sql.Rows, error) {
 	if len(params) < 1 {
 		noParamsErr := errors.New("no params were passed")
