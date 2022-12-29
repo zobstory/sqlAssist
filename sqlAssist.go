@@ -76,10 +76,10 @@ type AssistConfig struct {
 }
 
 type StatementAssist interface {
-	New() (config *AssistConfig)
 	UpdateSingleRow(query string, params ...interface{}) error
 	ScanSingleRow(db *sql.DB, query string, params ...interface{}) (*sql.Row, error)
 	ScanMultipleRows(query string, params ...interface{}) (*sql.Rows, error)
+	New() (config *AssistConfig)
 }
 
 // New returns a new instance of AssistConfig to access the StatementAssist interface
