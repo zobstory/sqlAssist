@@ -63,6 +63,7 @@ See https://pkg.go.dev/database/sql for documentation on the standard sql librar
 */
 
 package sqlAssist
+// sqlAssist Note
 
 import (
 	"database/sql"
